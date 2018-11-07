@@ -135,7 +135,7 @@ def create_new_device(request):
     d.save()  # save the new case
     template = loader.get_template('lab_manager/index.html')
     context = {}
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(devices(request))
 
 def device_details(request):
     return HttpResponse("hello")
