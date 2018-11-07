@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'lab_manager',
-    'lab_manager.apps.LabManagerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,7 +69,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lab_manager.wsgi.application'
-AUTHENTICATION_BACKENDS = [ 'lab_manager.backends.ActiveDirectoryGroupMembershipSSLBackend' ]
+AUTHENTICATION_BACKENDS = [ 'lab_manager.backends.ActiveDirectoryGroupMembershipSSLBackend',
+                            'django.contrib.auth.backends.ModelBackend']
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
