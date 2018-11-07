@@ -165,7 +165,7 @@
 
 						<th></th>
 						<th data-sortable="true">IP Address</th>
-						<th data-sortable="true">Nickname</th>
+{#						<th data-sortable="true">Nickname</th>#}
 						<th data-sortable="true">Location</th>
 						<th data-sortable="true">Type</th>
 						<th data-sortable="true">Team</th>
@@ -174,59 +174,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for case in cases %}
+					{% for device in device_array %}
 
-					
-					{% if case.is_info %}
-					
+
 					<tr bgcolor="#d8dfea">
 
-						
-
-
-
-						{% if case.is_public == 1 %}
-							<td></td>
-						{% else %}
-							<td><i class="fa fa-user-secret" style="font-size:28px;"  data-toggle="tooltip" title="Private case. Only you can see this case"></i></td>
-
-						{% endif %}
-
-						<td><a href="{% url 'polls:case_details' case.id %}" data-toggle="tooltip" title="click for case details"><font color=#000000>{{ case.id }}</font></a></td>
-						<td>{{ case.case_name }}</td>
-						<td>{{ case.user }}</td>
-						<td>{{ case.pub_date }}</td>
-						<td>{{ case.clearquest_id }}</td>
-						<td>{{ case.found_in_release }}</td>
-						<td>{{ case.fixed_release }}</td>
-						
-						
-						<td>{{ case.get_statistics  }}%</td>
+                    <td><a href="{% url 'device_details' device.ip_address %}" data-toggle="tooltip" title="click here to edit device details"><font color=#000000>{{ device.ip_address }}</font></a></td>
+                    <td>{{ device.ip_address }}</td>
+{#                    <td>{{ device.nickname }}</td>#}
+                    <td>{{ device.device_location }}</td>
+                    <td>{{ device.type }}</td>
+                    <td>{{ device.team }}</td>
+                    <td>{{ device.date_taken }}</td>
+                    <td>{{ device.owner }}</td>
 					</tr>
-					 {% else %}
-					 	<tr >
 
-
-
-
-						{% if case.is_public == 1 %}
-							<td></td>
-						{% else %}
-							<td><i class="fa fa-user-secret" style="font-size:28px;"  data-toggle="tooltip" title="Private case. Only you can see this case"></i></td>
-						{% endif %}
-
-						<td><a href="{% url 'polls:case_details' case.id %}" data-toggle="tooltip" title="click for case details"><font color=#000000>{{ case.id }}</font></a></td>
-						<td>{{ case.case_name }}</td>
-						<td>{{ case.user }}</td>
-						<td>{{ case.pub_date }}</td>
-						<td>{{ case.clearquest_id }}</td>
-						<td>{{ case.found_in_release }}</td>
-						<td>{{ case.fixed_release }}</td>
-						
-						
-						<td>{{ case.get_statistics }}%</td>
-					</tr>
-					{% endif %}
 					{% endfor %}
 				</tbody>
 		
@@ -238,7 +200,7 @@
 	
 <script>
 $(document).ready(function() {
-	$('#cases_table').DataTable({
+	$('#devices_table').DataTable({
 		"bStateSave": true, 
 		"order": [[ 1, "asc" ]]
 		//"order": [[ 2, "asc" ]]

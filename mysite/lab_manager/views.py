@@ -19,6 +19,7 @@ from django.contrib.auth import logout
 class PAGES:
 	LOGIN_PAGE = "lab_manager/login.html"
 	ALL_DEVICES_PAGE = "lab_manager/index.html"
+	NEW_DEVICES_PAGE = "lab_manager/new_device.html"
 	HOMEPAGE = ALL_DEVICES_PAGE
 	RELOGIN_PAGE = "lab_manager/relogin.html"
 
@@ -101,13 +102,20 @@ def isLoggedIn(request):
 
 
 def devices(request):
-    template = loader.get_template('lab_manager/index.html')
-    context = {}
-    return HttpResponse(template.render(context, request))
+    devices_page = PAGES.ALL_DEVICES_PAGE
+    login_page = PAGES.LOGIN_PAGE
+
+    if (not isLoggedIn(request)):  # if user didn't log in, render to login page
+        request.session[SESSION_KEYS.LOGIN_MESSAGE] = MESSAGES.SESSION_EXPIRED
+        return render(request, login_page, {})
+
+    device_array = list(Device.objects)  # get all public cases and alll user's private cases
+
+    return render(request, devices_page, {'device_array': device_array})
 
 
 def new_device(request):
-    template = loader.get_template('lab_manager/new_device.html')
+    template = loader.get_template(PAGES.NEW_DEVICES_PAGE)
     context = {}
     return HttpResponse(template.render(context, request))
 
