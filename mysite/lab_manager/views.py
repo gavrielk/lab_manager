@@ -132,13 +132,6 @@ def create_new_device(request):
     new_device_type = request.POST.get('type', '')
     new_device_team = request.POST.get('team', '')
     d = Device(owner=new_user, date_taken=timezone.now(), ip_address=new_ip_address, device_location=new_location, type=new_device_type, team=new_device_team)
-<<<<<<< HEAD
-
-=======
->>>>>>> 5ecf9bfba56a45f8c1a80184fbb3f50e2a4db7ed
-    d.save()  # save the new case
-    template = loader.get_template('lab_manager/index.html')
-    context = {}
     return HttpResponse(template.render(context, request))
 
 def device_details(request):
