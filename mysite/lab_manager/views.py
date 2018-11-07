@@ -42,7 +42,7 @@ def callLoginForm(request):
     homepage = PAGES.HOMEPAGE
 
     if (isLoggedIn(request)):  # if user alredy logeed in, render directly to homepage
-        return render(request, homepage, {})
+        return devices(request)
 
     request.session[SESSION_KEYS.LOGIN_MESSAGE] = MESSAGES.EMPTY_STRING  # no error message should be displayed
 
@@ -65,7 +65,7 @@ def userLogin(request):
     if user is not None:  # user with this username and password was found
         login(request, user)  # Django login function. login user
         request.session[SESSION_KEYS.USER_FULL_NAME] = user.get_full_name()  # save user full name to session
-        return render(request, homepage, {})  # render to homapage
+        return devices(request)  # render to homapage
 
     else:  # no user with this username and password was found
         return render(request, relogin_page, {})  # render back to login page
@@ -109,7 +109,7 @@ def devices(request):
         request.session[SESSION_KEYS.LOGIN_MESSAGE] = MESSAGES.SESSION_EXPIRED
         return render(request, login_page, {})
 
-    device_array = list(Device.objects)  # get all public cases and alll user's private cases
+    device_array = list(Device.objects.all())  # get all public cases and alll user's private cases
 
     return render(request, devices_page, {'device_array': device_array})
 
@@ -132,8 +132,14 @@ def create_new_device(request):
     new_device_type = request.POST.get('type', '')
     new_device_team = request.POST.get('team', '')
     d = Device(owner=new_user, date_taken=timezone.now(), ip_address=new_ip_address, device_location=new_location, type=new_device_type, team=new_device_team)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5ecf9bfba56a45f8c1a80184fbb3f50e2a4db7ed
     d.save()  # save the new case
     template = loader.get_template('lab_manager/index.html')
     context = {}
     return HttpResponse(template.render(context, request))
+
+def device_details(request):
+    return HttpResponse("hello")
