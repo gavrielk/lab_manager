@@ -133,8 +133,6 @@ def create_new_device(request):
     new_device_team = request.POST.get('team', '')
     d = Device(owner=new_user, date_taken=timezone.now(), ip_address=new_ip_address, device_location=new_location, type=new_device_type, team=new_device_team)
 
-    #d = Device(owner=new_user, date_taken=timezone.now(), ip_address=new_ip_address, device_location=new_location,
-    #           type=new_device_type, team=new_team)
     d.save()  # save the new case
     template = loader.get_template('lab_manager/index.html')
     context = {}
