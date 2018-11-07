@@ -55,7 +55,7 @@ ROOT_URLCONF = 'lab_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['lab_manager/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
