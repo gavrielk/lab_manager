@@ -1,2 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Laborator</title>
+<meta charset="utf-8">
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static '../static/polls/style.css' %}" /> -->
+<style type="text/css">
+   body { background: #ffffff !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+</style>
 
-Hello world :)
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+	src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script
+	src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+
+/* navbar style */
+
+.navbar-default {
+  background-color: #3b5998;
+  border-color: #6d84b4;
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-toggle {
+  border-color: #6d84b4;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #6d84b4;
+  }
+}
+
+
+
+/* DataTable css*/
+
+
+.pagination > li > a, .pagination > li > span{background-color:#3b5998}
+.pagination > li.active > a, .pagination > li.active > span{background-color:#3b5998}
+.pagination a:hover:not(.active) {background-color: #6d84b4;}
+
+
+.lengthMenu a:hover {color: #6d84b4;}
+
+
+</style>
+
+
+
+
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+
+		<nav class="navbar navbar-default" role="navigation">
+
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">Labarator</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="{% url 'devices'%}">All Devices</a></li>
+					<li><a href="{% url 'new_device' %}">New Device</a></li>
+{#					<li class="active"><a href="{% url 'polls:all_cases' %}">Cases</a></li>#}
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+      					<li><a>{{request.session.user_full_name}}</a></li>
+      					<li><a href="{% url 'logout' %}">log out</a></li>
+    				</ul>
+
+			</div>
+		</nav>
+	</div>
+			
+		
+			
+			
+		<ul>
+		<div class="col-md-10 col-md-offset-1">
+			<table data-toggle="table" class="table table-hover" id="devices_table">
+				<thead>
+					<tr>
+
+						{% comment %}
+						<th></th>
+						{% endcomment %}
+
+						<th></th>
+						<th data-sortable="true">IP Address</th>
+						<th data-sortable="true">Nickname</th>
+						<th data-sortable="true">Location</th>
+						<th data-sortable="true">Type</th>
+						<th data-sortable="true">Team</th>
+						<th data-sortable="true">Date taken</th>
+						<th data-sortable="true">Owner</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for case in cases %}
+
+					
+					{% if case.is_info %}
+					
+					<tr bgcolor="#d8dfea">
+
+						
+
+
+
+						{% if case.is_public == 1 %}
+							<td></td>
+						{% else %}
+							<td><i class="fa fa-user-secret" style="font-size:28px;"  data-toggle="tooltip" title="Private case. Only you can see this case"></i></td>
+
+						{% endif %}
+
+						<td><a href="{% url 'polls:case_details' case.id %}" data-toggle="tooltip" title="click for case details"><font color=#000000>{{ case.id }}</font></a></td>
+						<td>{{ case.case_name }}</td>
+						<td>{{ case.user }}</td>
+						<td>{{ case.pub_date }}</td>
+						<td>{{ case.clearquest_id }}</td>
+						<td>{{ case.found_in_release }}</td>
+						<td>{{ case.fixed_release }}</td>
+						
+						
+						<td>{{ case.get_statistics  }}%</td>
+					</tr>
+					 {% else %}
+					 	<tr >
+
+
+
+
+						{% if case.is_public == 1 %}
+							<td></td>
+						{% else %}
+							<td><i class="fa fa-user-secret" style="font-size:28px;"  data-toggle="tooltip" title="Private case. Only you can see this case"></i></td>
+						{% endif %}
+
+						<td><a href="{% url 'polls:case_details' case.id %}" data-toggle="tooltip" title="click for case details"><font color=#000000>{{ case.id }}</font></a></td>
+						<td>{{ case.case_name }}</td>
+						<td>{{ case.user }}</td>
+						<td>{{ case.pub_date }}</td>
+						<td>{{ case.clearquest_id }}</td>
+						<td>{{ case.found_in_release }}</td>
+						<td>{{ case.fixed_release }}</td>
+						
+						
+						<td>{{ case.get_statistics }}%</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</tbody>
+		
+		</table>
+		</div>
+		</ul>
+	
+		
+	
+<script>
+$(document).ready(function() {
+	$('#cases_table').DataTable({
+		"bStateSave": true, 
+		"order": [[ 1, "asc" ]]
+		//"order": [[ 2, "asc" ]]
+	
+	});
+
+} );
+
+
+
+</script>
+
+</body>
+</html>
+
+

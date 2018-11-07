@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Log Analyzer</title>
+<meta charset="utf-8">
+<style type="text/css">
+   body { background: #ffffff !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+
+/* navbar style */
+
+.navbar-default {
+  background-color: #3b5998;
+  border-color: #6d84b4;
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-toggle {
+  border-color: #6d84b4;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #6d84b4;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #6d84b4;
+  }
+}
+
+
+/* Buttons css */
+
+.button {
+    background-color: #3b5998;
+    color: #ffffff;
+    border-style:none;
+}
+.button:hover {
+    background-color: #6d84b4;
+    color: #ffffff;
+    border-style:none;
+
+}
+.button:active {
+    background-color: #ffffff;
+    color: #000000;
+    border-style:none;
+
+}
+
+.button:focus {     
+    background-color: #3b5998;
+    color: #ffffff;
+    border-style:none;
+
+
+}
+
+
+</style>
+
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<nav class="navbar navbar-default" role="navigation">
+
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">Log Analyzer</a>
+				</div>
+				<ul class="nav navbar-nav">
+                    <li><a href="{% url 'devices'%}">All Devices</a></li>
+					<li><a href="{% url 'new_device' %}">New Device</a></li>
+					{% comment %}<li><a href="{% url 'polls:last_upload' %}">Last Upload</a></li>{% endcomment %}
+					{% comment %}<li><a href='/admin/'>Admin</a></li>{% endcomment %}
+
+
+				</ul>
+                                  
+				<ul class="nav navbar-nav navbar-right">
+      					<li><a>{{request.session.user_full_name}}</a></li>
+      					<li><a href="{% url 'logout' %}">log out</a></li>
+    				</ul>
+
+			</div>
+		</nav>		<div class="container">
+			<div class="page-header">
+				<h2>
+					<strong>Login</strong>
+				</h2>
+			</div>
+
+			<p><font color="red">User/password incorrect!</font></p>
+
+			<form action="{% url 'login' %}" method="post">
+				{% csrf_token %} {{ form.as_p }}
+
+				User:<br>
+				<input type="text" name="user">
+				<br>
+				Password:<br>
+				<input type="password" name="password">
+				<br><br>
+
+				
+				<button type="login" class="button btn btn-default center-block btn-lg">submit</button>
+
+
+			</form>
+		</div>
+	</div>
+
+</body>
+
+</html>
+
